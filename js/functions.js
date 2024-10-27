@@ -3,9 +3,10 @@ function lineLength(string, maxLength) {
   if (string.length <= maxLength) { return true; }
   return false;
 }
-console.log(lineLength('проверяемая строка', 20)); // true
-console.log(lineLength('проверяемая строка', 18)); // true
-console.log(lineLength('проверяемая строка', 10)); // false
+
+// eslint-disable-next-line no-console
+console.log(lineLength('проверяемая строка', 20));
+
 
 
 function checkingForPalindrome(string) {
@@ -15,6 +16,6 @@ function checkingForPalindrome(string) {
   }
   return false;
 }
-console.log(checkingForPalindrome('топот')); // true
-console.log(checkingForPalindrome('ДовОд')); // true
-console.log(checkingForPalindrome('Кекс'));  // false
+// eslint-disable-next-line no-console
+console.log(checkingForPalindrome('топот'));
+
