@@ -79,6 +79,6 @@ const photoIds = generateUniqueIds(25);
 const photoUrls = photoIds.map((id) => `photos/${id}.jpg`);
 
 // Генерация массива описаний фотографий
-const Photos = photoIds.map((id, index) => createPhotoDescription(id, photoUrls[index], index * 30)); // Для каждого фото стартуем ID комментариев с уникальной базой
+const similarPhotos = photoIds.map((id, index) => createPhotoDescription(id, photoUrls[index], index * 30)); // Для каждого фото стартуем ID комментариев с уникальной базой
 
-console.log(Photos);
+console.log(similarPhotos);
