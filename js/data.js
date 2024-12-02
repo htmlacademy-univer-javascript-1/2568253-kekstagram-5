@@ -1,4 +1,3 @@
-// data.js
 import { getRandomInteger, getRandomArrayElement } from './util.js';
 
 const MESSAGE = [
@@ -32,14 +31,12 @@ export const generateUniqueIds = (count) => {
 };
 
 // Функция для создания комментариев
-export const createComments = (commentId) => {
-  return {
+export const createComments = (commentId) => ({
     id: commentId,
     avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
     message: getRandomArrayElement(MESSAGE),
     name: getRandomArrayElement(NAME),
-  };
-};
+});
 
 // Функция для создания описания фотографии
 export const createPhotoDescription = (id, url, commentId) => {
