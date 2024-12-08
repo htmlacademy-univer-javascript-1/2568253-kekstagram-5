@@ -24,29 +24,44 @@ function validateForm(form) {
   const descriptionValid = validateDescription(descriptionInput.value);
   let isValid = true;
 
+  const errorMessages = [];
+
   if (!hashtagsValid) {
     isValid = false;
-    console.log('Некорректные хэш-теги!');
+    errorMessages.push('Некорректные хэш-теги!');
   }
   if (!descriptionValid) {
     isValid = false;
-    console.log('Описание должно быть не пустым и не более 140 символов!');
+    errorMessages.push('Описание должно быть не пустым и не более 140 символов!');
   }
   if (!fileInput.files.length) {
     isValid = false;
-    console.log('Выберите изображение для загрузки!');
+    errorMessages.push('Выберите изображение для загрузки!');
+  }
+
+  if (!isValid) {
+    showErrorMessages(errorMessages);
   }
 
   return isValid;
+}
+
+function showErrorMessages(messages) {
+  const errorContainer = document.querySelector('.error-messages');
+  errorContainer.innerHTML = '';
+  messages.forEach(message => {
+    const errorElement = document.createElement('div');
+    errorElement.classList.add('error-message');
+    errorElement.textContent = message;
+    errorContainer.appendChild(errorElement);
+  });
 }
 
 document.getElementById('upload-select-image').addEventListener('submit', function (event) {
   event.preventDefault();
   const form = this;
   if (validateForm(form)) {
-    console.log('Форма прошла валидацию!');
+    // Если форма прошла валидацию, можно отправить ее
     form.submit();
-  } else {
-    console.log('Пожалуйста, исправьте ошибки в форме.');
   }
 });
