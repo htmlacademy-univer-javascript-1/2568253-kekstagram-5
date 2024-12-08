@@ -1,3 +1,5 @@
+import noUiSlider from 'nouislider';
+import 'vendor/nouislider/nouislider.css';
 
 const uploadFileInput = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -8,7 +10,23 @@ const scaleControlValue = document.querySelector('.scale__control--value');
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const effectRadios = document.querySelectorAll('.effects__radio');
+const effectLevel = document.querySelector('.effect-level');
+const effectLevelValue = document.querySelector('.effect-level__value');
+const effectSlider = document.querySelector('.effect-level__slider');
 const form = document.querySelector('.img-upload__form');
+
+let scale = 100;
+
+// Инициализация слайдера для регулировки интенсивности эффектов
+noUiSlider.create(effectSlider, {
+  start: 100,
+  range: {
+    'min': [0],
+    'max': [100],
+  },
+  step: 1,
+  connect: 'lower',
+});
 
 function openImageEditForm() {
   uploadOverlay.classList.remove('hidden');
@@ -23,6 +41,7 @@ function closeImageEditForm() {
   scaleControlValue.value = '100%';
   effectRadios.forEach(radio => radio.checked = false);
   effectRadios[0].checked = true;
+  effectLevel.classList.add('hidden');
 }
 
 uploadFileInput.addEventListener('change', (event) => {
@@ -45,8 +64,8 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+// Обработка кнопок увеличения/уменьшения масштаба
 scaleControlSmaller.addEventListener('click', () => {
-  let scale = parseInt(scaleControlValue.value, 10);
   if (scale > 25) {
     scale -= 25;
     scaleControlValue.value = `${scale}%`;
@@ -55,7 +74,6 @@ scaleControlSmaller.addEventListener('click', () => {
 });
 
 scaleControlBigger.addEventListener('click', () => {
-  let scale = parseInt(scaleControlValue.value, 10);
   if (scale < 100) {
     scale += 25;
     scaleControlValue.value = `${scale}%`;
@@ -63,17 +81,38 @@ scaleControlBigger.addEventListener('click', () => {
   }
 });
 
+// Эффекты
 effectRadios.forEach((radio) => {
   radio.addEventListener('change', (event) => {
     const selectedEffect = event.target.value;
     previewImage.className = '';
     previewImage.classList.add(`effects__preview--${selectedEffect}`);
-    const effectLevel = document.querySelector('.effect-level');
+
     if (selectedEffect === 'chrome' || selectedEffect === 'sepia' || selectedEffect === 'heat' || selectedEffect === 'marvin') {
       effectLevel.classList.remove('hidden');
+      effectSlider.noUiSlider.set(100);
     } else {
       effectLevel.classList.add('hidden');
+      previewImage.style.filter = '';
     }
   });
 });
 
+
+effectSlider.noUiSlider.on('update', (values) => {
+  const value = values[0];
+  effectLevelValue.value = value;
+  const effectType = document.querySelector('.effects__radio:checked').value;
+
+  if (effectType === 'chrome') {
+    previewImage.style.filter = `grayscale(${value / 100})`;
+  } else if (effectType === 'sepia') {
+    previewImage.style.filter = `sepia(${value / 100})`;
+  } else if (effectType === 'marvin') {
+    previewImage.style.filter = `invert(${value}%)`;
+  } else if (effectType === 'phobos') {
+    previewImage.style.filter = `blur(${value / 10}px)`;
+  } else if (effectType === 'heat') {
+    previewImage.style.filter = `brightness(${1 + value / 100})`;
+  }
+});
