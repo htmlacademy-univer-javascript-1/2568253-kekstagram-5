@@ -1,3 +1,4 @@
+
 const uploadFileInput = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadCancel = document.querySelector('#upload-cancel');
@@ -75,3 +76,4 @@ effectRadios.forEach((radio) => {
     }
   });
 });
+
