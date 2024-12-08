@@ -8,10 +8,12 @@ const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const effectRadios = document.querySelectorAll('.effects__radio');
 const form = document.querySelector('.img-upload__form');
+
 function openImageEditForm() {
   uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
 }
+
 function closeImageEditForm() {
   uploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -21,6 +23,7 @@ function closeImageEditForm() {
   effectRadios.forEach(radio => radio.checked = false);
   effectRadios[0].checked = true;
 }
+
 uploadFileInput.addEventListener('change', (event) => {
   const file = event.target.files[0];
   if (file) {
@@ -32,12 +35,15 @@ uploadFileInput.addEventListener('change', (event) => {
     reader.readAsDataURL(file);
   }
 });
+
 uploadCancel.addEventListener('click', closeImageEditForm);
+
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
     closeImageEditForm();
   }
 });
+
 scaleControlSmaller.addEventListener('click', () => {
   let scale = parseInt(scaleControlValue.value, 10);
   if (scale > 25) {
@@ -46,6 +52,7 @@ scaleControlSmaller.addEventListener('click', () => {
     previewImage.style.transform = `scale(${scale / 100})`;
   }
 });
+
 scaleControlBigger.addEventListener('click', () => {
   let scale = parseInt(scaleControlValue.value, 10);
   if (scale < 100) {
@@ -54,6 +61,7 @@ scaleControlBigger.addEventListener('click', () => {
     previewImage.style.transform = `scale(${scale / 100})`;
   }
 });
+
 effectRadios.forEach((radio) => {
   radio.addEventListener('change', (event) => {
     const selectedEffect = event.target.value;
