@@ -1,32 +1,32 @@
-import { Effect } from './consts.js';
+import {Effect} from './consts.js';
 
-const uploadFormElement = document.querySelector('.img-upload__form');
-const uploadPicturePreviewElement = uploadFormElement.querySelector('.img-upload__preview img');
-const effectFieldsetElement = uploadFormElement.querySelector('.effects');
-const sliderContainerElement = uploadFormElement.querySelector('.img-upload__effect-level');
-const sliderElement = uploadFormElement.querySelector('.effect-level__slider');
-const effectLevelElement = uploadFormElement.querySelector('.effect-level__value');
+const uploadForm = document.querySelector('.img-upload__form');
+const uploadPicturePreview = uploadForm.querySelector('.img-upload__preview img');
+const effects = uploadForm.querySelector('.effects');
+const sliderContainer = uploadForm.querySelector('.img-upload__effect-level');
+const slider = uploadForm.querySelector('.effect-level__slider');
+const effectLevel = uploadForm.querySelector('.effect-level__value');
 
 let currentEffect = null;
 
 const updatePictureStyle = () => {
   if (currentEffect === Effect.DEFAULT) {
-    uploadPicturePreviewElement.style.filter = null;
+    uploadPicturePreview.style.filter = null;
   } else {
-    const value = effectLevelElement.value;
+    const value = effectLevel.value;
     const style = currentEffect.style;
     const unit = currentEffect.unit;
-    uploadPicturePreviewElement.style.filter = `${style}(${value}${unit})`;
+    uploadPicturePreview.style.filter = `${style}(${value}${unit})`;
   }
 };
 
 const onSliderUpdate = () => {
-  effectLevelElement.value = sliderElement.noUiSlider.get();
+  effectLevel.value = slider.noUiSlider.get();
   updatePictureStyle();
 };
 
 const createSlider = (effect) => {
-  noUiSlider.create(sliderElement, {
+  noUiSlider.create(slider, {
     range: {
       min: effect.min,
       max: effect.max,
@@ -39,15 +39,15 @@ const createSlider = (effect) => {
       from: (value) => Number(value),
     }
   });
-  sliderElement.noUiSlider.on('update', onSliderUpdate);
-  sliderContainerElement.classList.add('hidden');
+  slider.noUiSlider.on('update', onSliderUpdate);
+  sliderContainer.classList.add('hidden');
 };
 
 const updateSlider = () => {
   if (currentEffect === Effect.DEFAULT) {
-    sliderContainerElement.classList.add('hidden');
+    sliderContainer.classList.add('hidden');
   } else {
-    sliderElement.noUiSlider.updateOptions({
+    slider.noUiSlider.updateOptions({
       range: {
         min: currentEffect.min,
         max: currentEffect.max
@@ -55,11 +55,11 @@ const updateSlider = () => {
       start: currentEffect.start,
       step: currentEffect.step
     });
-    sliderContainerElement.classList.remove('hidden');
+    sliderContainer.classList.remove('hidden');
   }
 };
 
-const onEffectFieldsetChange = (evt) => {
+const onEffectChange = (evt) => {
   const changedEffect = evt.target.value.toUpperCase();
   if (changedEffect in Effect) {
     currentEffect = Effect[changedEffect];
@@ -71,15 +71,15 @@ const onEffectFieldsetChange = (evt) => {
 };
 
 const destroySlider = () => {
-  sliderElement.noUiSlider.destroy();
-  effectFieldsetElement.removeEventListener('change', onEffectFieldsetChange);
-  uploadPicturePreviewElement.style.filter = '';
+  slider.noUiSlider.destroy();
+  effects.removeEventListener('change', onEffectChange);
+  uploadPicturePreview.style.filter = '';
 };
 
 const initSlider = () => {
   currentEffect = Effect.DEFAULT;
   createSlider(currentEffect);
-  effectFieldsetElement.addEventListener('change', onEffectFieldsetChange);
+  effects.addEventListener('change', onEffectChange);
 };
 
 export {initSlider, destroySlider};
