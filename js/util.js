@@ -1,8 +1,25 @@
-export const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
+import { MIN_AVATAR_NUMBER, MAX_AVATAR_NUMBER, authorNames, photoDescriptions } from './data.js';
 
-export const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+export function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function getRandomAvatarNumber() {
+  return getRandomNumber(MIN_AVATAR_NUMBER, MAX_AVATAR_NUMBER);
+}
+
+export function getRandomAuthorName() {
+  const randomIndex = getRandomNumber(0, authorNames.length - 1);
+  return authorNames[randomIndex];
+}
+
+export function getRandomPhotoDescription() {
+  const randomIndex = getRandomNumber(0, photoDescriptions.length - 1);
+  return photoDescriptions[randomIndex];
+}
+
+export const onDocumentKeydown = (evt, closingFunc) => {
+  if (evt.key === 'Escape') {
+    closingFunc(evt);
+  }
+};
