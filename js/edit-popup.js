@@ -13,6 +13,8 @@ const discriptionField = uploadForm.querySelector('.img-upload__field-wrapper te
 const pictureInput = uploadForm.querySelector('.img-upload__input');
 const closePopupBtn = uploadForm.querySelector('.img-upload__cancel');
 const submitBtn = uploadForm.querySelector('.img-upload__submit');
+const uploadPicturePreview = uploadForm.querySelector('.img-upload__preview img');
+const effectsPreviews = uploadForm.querySelectorAll('.effects__preview');
 
 let pristine = null;
 
@@ -93,11 +95,20 @@ function closePopup() {
 
 const isFileImage = (file) => FILE_TYPES.includes(file);
 
+const initPreviewImage = (file) => {
+  uploadPicturePreview.src = URL.createObjectURL(file);
+  effectsPreviews.forEach((picture) => {
+    picture.style.backgroundImage = `url('${uploadPicturePreview.src}')`;
+  });
+};
+
 const onPictureInputChange = () => {
-  if (isFileImage(pictureInput.files[0].type)) {
+  const selectedFile = pictureInput.files[0];
+  if (isFileImage(selectedFile.type)) {
     initScaleControl();
     initValidators();
     initSlider();
+    initPreviewImage(selectedFile);
 
     body.classList.add('modal-open');
     popup.classList.remove('hidden');
