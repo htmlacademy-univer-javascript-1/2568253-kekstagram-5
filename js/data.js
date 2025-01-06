@@ -1,28 +1,26 @@
+import { getRandomNumber, getRandomPhotoDescription } from './util.js';
 
-export const photos = [
-  {
-    url: 'photos/1.jpg',
-    description: 'зима',
-    likes: 150,
-    comments: 20,
-  },
-  {
-    url: 'photos/2.jpg',
-    description: 'лето',
-    likes: 200,
-    comments: 45,
-  },
-  {
-    url: 'photos/3.jpg',
-    description: 'Горы и озеро',
-    likes: 90,
-    comments: 10,
-  },
-];
+const MIN_LIKES = 15;
+const MAX_LIKES = 200;
+const MIN_AVATAR_NUMBER = 1;
+const MAX_AVATAR_NUMBER = 1;
+const MIN_COMMENTS_COUNT = 0;
+const MAX_COMMENTS_COUNT = 30;
+const MAX_HASHTAGS_COUNT = 5;
+const MAX_DESCRIPTION_LENGTH = 140;
 
-import { getRandomInteger, getRandomArrayElement } from './util.js';
+const SCALE = {
+  MIN: 25,
+  MAX: 100
+};
 
-const MESSAGE = [
+const SCALE_STEP = 25;
+
+const DEFAULT_SCALE = 100;
+
+export const authorNames = ['Иван', 'Анна', 'Петр', 'Мария', 'Алексей', 'Елена', 'Дмитрий', 'Ольга', 'Сергей', 'Наталья'];
+
+const commentsExamples = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -30,44 +28,53 @@ const MESSAGE = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
-
-const NAME = [
-  'Иван',
-  'Хуан Себастьян',
-  'Мария',
-  'Кристоф',
-  'Виктор',
-  'Юлия',
-  'Люпита',
-  'Вашингтон',
+export const photoDescriptions = [
+  'Красивый закат на пляже',
+  'Горизонтальное излучение солнца в лесу',
+  'Городской пейзаж вечером',
+  'Величественные горы в облаках',
+  'Парусная лодка на озере',
+  'Цветущие вишневые деревья',
+  // Добавьте здесь ещё описаний по вашему усмотрению
 ];
 
-// Функция для генерации уникальных ID
-export const generateUniqueIds = (count) => {
-  const ids = Array.from({ length: count }, (_, i) => i + 1);
-  for (let i = ids.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [ids[i], ids[j]] = [ids[j], ids[i]];
+export const generateComments = (commentsCount) => {
+  const comments = [];
+  for (let i = 0; i <= commentsCount - 1; i++) {
+    const comment = {
+      id: i,
+      avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
+      message: commentsExamples[getRandomNumber(0, commentsExamples.length - 1)],
+      name: authorNames[getRandomNumber(0, authorNames.length - 1)],
+    };
+    comments.push(comment);
   }
-  return ids;
+  return comments;
 };
 
-// Функция для создания комментариев
-export const createComments = (commentId) => ({
-    id: commentId,
-    avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-    message: getRandomArrayElement(MESSAGE),
-    name: getRandomArrayElement(NAME),
-});
+export function generatePhoto(id) {
+  const url = `photos/${id}.jpg`;
+  const description = getRandomPhotoDescription();
+  const likes = getRandomNumber(MIN_LIKES, MAX_LIKES);
+  const comments = generateComments(getRandomNumber(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT));
 
-// Функция для создания описания фотографии
-export const createPhotoDescription = (id, url, commentId) => {
   return {
     id,
     url,
-    description: 'Красивые кошки гуляют по полю:) Вот бы не было дедлайнов, извиняюсь, что я всё просрочила:(((((((',
-    likes: getRandomInteger(15, 200),
-    comments: Array.from({ length: getRandomInteger(0, 30) }, (_, index) => createComments(commentId + index)),
+    description,
+    likes,
+    comments,
   };
-};
+}
 
+export function generatePhotoArray(numPhotos) {
+  const photoArray = [];
+
+  for (let i = 1; i <= numPhotos; i++) {
+    const photo = generatePhoto(i);
+    photoArray.push(photo);
+  }
+
+  return photoArray;
+}
+export {MIN_AVATAR_NUMBER, MAX_AVATAR_NUMBER, MAX_HASHTAGS_COUNT, MAX_DESCRIPTION_LENGTH, SCALE, SCALE_STEP, DEFAULT_SCALE};
