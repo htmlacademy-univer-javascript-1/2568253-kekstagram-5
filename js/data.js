@@ -28,3 +28,4 @@ const getPost = (_, id) => {
 const generatePosts = () => Array.from({length: COUNT_POSTS}, getPost);
 
 export {generatePosts};
+
