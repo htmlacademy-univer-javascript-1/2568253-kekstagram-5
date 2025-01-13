@@ -17,7 +17,7 @@ const shuffle = (array) => {
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const showAlert = () => {
-  const alert = document.querySelector('div');
+  const alert = document.createElement('div');
   alert.style.position = 'absolute';
   alert.style.zIndex = '100';
   alert.style.left= '0';
@@ -28,7 +28,7 @@ const showAlert = () => {
   alert.style.textAlign = 'center';
   alert.style.backgroundColor = 'red';
   alert.style.lineHeight = '28px';
-  alert.textContent = 'Не удалось загрузить данные.Попробуйте обновить страницу';
+  alert.textContent = 'Не удалось загрузить данные. Попробуйте обновить страницу';
   document.body.append(alert);
 };
 
@@ -42,4 +42,4 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export {generateRandomNumber, shuffle, isEscapeKey, showAlert, debounce};
+export { generateRandomNumber, shuffle, isEscapeKey, showAlert, debounce };
