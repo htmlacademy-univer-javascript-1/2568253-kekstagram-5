@@ -1,3 +1,4 @@
+// Константы
 const COUNT_THUMBNAILS = 25;
 const SCALE_STEP = 25;
 const SCALE_FACTOR = 0.01;
@@ -12,6 +13,7 @@ const FILTER_ACTIVE_CLASS = 'img-filters__button--active';
 const COUNT_THUMBNAILS_RANDOM_FILTER = 10;
 const RERENDER_DELAY = 500;
 
+// Перечисления
 const Filter = {
   DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
@@ -37,27 +39,6 @@ const LikesCount = {
   MIN: 15,
   MAX: 200,
 };
-
-const MESSAGES = ['Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
-];
-
-const NAMES = [
-  'Анна',
-  'Виктор',
-  'Александр',
-  'Наталья',
-  'Артемий',
-  'Евангелина',
-  'Владимир',
-  'Анастасия',
-  'Егор',
-  'Дарья'
-];
 
 const ScaleValue = {
   MIN: 25,
@@ -122,4 +103,52 @@ const ErrorText = {
   INVALID_LENGTH: 'Комментарий не может быть длиннее 140 символов!',
 };
 
-export {RERENDER_DELAY, COUNT_THUMBNAILS_RANDOM_FILTER, FILTER_ACTIVE_CLASS, FILTER_HIDDEN_CLASS, Filter, MESSAGE_Z_INDEX, STEP_COMMENTS, COUNT_THUMBNAILS, AvatarId, MessageCount, CommentsCount, LikesCount, MESSAGES, NAMES, SCALE_STEP, SCALE_FACTOR, ScaleValue, Effect, REGEX_HASHTAG, MAX_COUNT_HASHTAG, MAX_COUNT_LENGTH_DESCRIPTION, FILE_TYPES, ErrorText, };
+// Списки
+const MESSAGES = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
+];
+
+const NAMES = [
+  'Анна',
+  'Виктор',
+  'Александр',
+  'Наталья',
+  'Артемий',
+  'Евангелина',
+  'Владимир',
+  'Анастасия',
+  'Егор',
+  'Дарья'
+];
+
+// Экспорт
+export {
+  RERENDER_DELAY,
+  COUNT_THUMBNAILS_RANDOM_FILTER,
+  FILTER_ACTIVE_CLASS,
+  FILTER_HIDDEN_CLASS,
+  Filter,
+  MESSAGE_Z_INDEX,
+  STEP_COMMENTS,
+  COUNT_THUMBNAILS,
+  AvatarId,
+  MessageCount,
+  CommentsCount,
+  LikesCount,
+  MESSAGES,
+  NAMES,
+  SCALE_STEP,
+  SCALE_FACTOR,
+  ScaleValue,
+  Effect,
+  REGEX_HASHTAG,
+  MAX_COUNT_HASHTAG,
+  MAX_COUNT_LENGTH_DESCRIPTION,
+  FILE_TYPES,
+  ErrorText,
+};

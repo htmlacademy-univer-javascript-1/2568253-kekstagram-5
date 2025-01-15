@@ -6,22 +6,22 @@ const scaleControlSmallerBtnElement = uploadFormElement.querySelector('.scale__c
 const scaleControlBiggerBtnElement = uploadFormElement.querySelector('.scale__control--bigger');
 const scaleControlInputElement = uploadFormElement.querySelector('.scale__control--value');
 
-const onScaleControlSmallerBtnClick = () => {
+const changeScale = (increment) => {
   let scaleValue = Number(scaleControlInputElement.value.slice(0, -1));
-  if (scaleValue > ScaleValue.MIN) {
-    scaleValue -= SCALE_STEP;
-    scaleControlInputElement.value = `${scaleValue}%`;
-    uploadPicturePreviewElement.style.transform = `scale(${scaleValue * SCALE_FACTOR})`;
+  const newScaleValue = scaleValue + increment;
+
+  if (newScaleValue >= ScaleValue.MIN && newScaleValue <= ScaleValue.MAX) {
+    scaleControlInputElement.value = `${newScaleValue}%`;
+    uploadPicturePreviewElement.style.transform = `scale(${newScaleValue * SCALE_FACTOR / 100})`; // Применяем масштаб
   }
 };
 
+const onScaleControlSmallerBtnClick = () => {
+  changeScale(-SCALE_STEP);
+};
+
 const onScaleControlBiggerBtnClick = () => {
-  let scaleValue = Number(scaleControlInputElement.value.slice(0, -1));
-  if (scaleValue < ScaleValue.MAX) {
-    scaleValue += SCALE_STEP;
-    scaleControlInputElement.value = `${scaleValue}%`;
-    uploadPicturePreviewElement.style.transform = `scale(${scaleValue * SCALE_FACTOR})`;
-  }
+  changeScale(SCALE_STEP);
 };
 
 const destroyScaleControl = () => {
