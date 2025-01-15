@@ -26,36 +26,41 @@ const onSliderUpdate = () => {
 };
 
 const createSlider = (effect) => {
-  noUiSlider.create(sliderElement, {
-    range: {
-      min: effect.min,
-      max: effect.max,
-    },
-    step: effect.step,
-    start: effect.start,
-    connect: 'lower',
-    format: {
-      to: (value) => Number(value),
-      from: (value) => Number(value),
-    }
-  });
-  sliderElement.noUiSlider.on('update', onSliderUpdate);
+  if (!sliderElement.noUiSlider) {
+    noUiSlider.create(sliderElement, {
+      range: {
+        min: effect.min,
+        max: effect.max,
+      },
+      step: effect.step,
+      start: effect.start,
+      connect: 'lower',
+      format: {
+        to: (value) => Number(value),
+        from: (value) => Number(value),
+      }
+    });
+
+    sliderElement.noUiSlider.on('update', onSliderUpdate);
+  }
   sliderContainerElement.classList.add('hidden');
 };
 
 const updateSlider = () => {
-  if (currentEffect === Effect.DEFAULT) {
-    sliderContainerElement.classList.add('hidden');
-  } else {
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: currentEffect.min,
-        max: currentEffect.max
-      },
-      start: currentEffect.start,
-      step: currentEffect.step
-    });
-    sliderContainerElement.classList.remove('hidden');
+  if (sliderElement.noUiSlider) {
+    if (currentEffect === Effect.DEFAULT) {
+      sliderContainerElement.classList.add('hidden');
+    } else {
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          min: currentEffect.min,
+          max: currentEffect.max,
+        },
+        start: currentEffect.start,
+        step: currentEffect.step,
+      });
+      sliderContainerElement.classList.remove('hidden');
+    }
   }
 };
 
@@ -71,15 +76,27 @@ const onEffectFieldsetChange = (evt) => {
 };
 
 const destroySlider = () => {
-  sliderElement.noUiSlider.destroy();
+  if (sliderElement.noUiSlider) {
+    sliderElement.noUiSlider.destroy();
+  }
   effectFieldsetElement.removeEventListener('change', onEffectFieldsetChange);
   uploadPicturePreviewElement.style.filter = '';
 };
 
 const initSlider = () => {
+  if (!sliderElement || !sliderContainerElement) {
+    console.error('Элементы слайдера не найдены!');
+    return;
+  }
+
   currentEffect = Effect.DEFAULT;
   createSlider(currentEffect);
   effectFieldsetElement.addEventListener('change', onEffectFieldsetChange);
 };
 
-export {initSlider, destroySlider};
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSlider();
+});
+
+export { initSlider, destroySlider };
