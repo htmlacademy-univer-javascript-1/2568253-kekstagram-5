@@ -7,7 +7,7 @@ const scaleControlBiggerBtnElement = uploadFormElement.querySelector('.scale__co
 const scaleControlInputElement = uploadFormElement.querySelector('.scale__control--value');
 
 const changeScale = (increment) => {
-  let scaleValue = Number(scaleControlInputElement.value.slice(0, -1));
+  const scaleValue = Number(scaleControlInputElement.value.slice(0, -1));
   const newScaleValue = scaleValue + increment;
 
   if (newScaleValue >= ScaleValue.MIN && newScaleValue <= ScaleValue.MAX) {
