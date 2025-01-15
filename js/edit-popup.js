@@ -17,6 +17,7 @@ const uploadPicturePreviewElement = uploadFormElement.querySelector('.img-upload
 const effectPreviewElements = uploadFormElement.querySelectorAll('.effects__preview');
 
 let pristine = null;
+let isFormSubmittedSuccessfully = false;
 
 const getHashtagsArray = (hashtags) => hashtags.toLowerCase().trim().split(' ').filter((tag) => Boolean(tag.length));
 
@@ -55,9 +56,13 @@ const onPopupClose = () => {
 const onPopupKeydown = (evt) => {
   const focusedElement = document.activeElement;
 
+  // Обработка нажатия ESC только если форма была отправлена успешно
   if (isEscapeKey(evt) && !isInputFormElement(focusedElement)) {
-    evt.preventDefault();
-    closePopup();
+    if (!isFormSubmittedSuccessfully) {
+      evt.preventDefault();
+    } else {
+      closePopup();
+    }
   }
 };
 
@@ -67,12 +72,15 @@ const onFormSubmit = (evt) => {
   if (pristine.validate()) {
     submitBtnElement.disabled = true;
     sendData(new FormData(evt.target))
-      .then(closePopup)
-      .then(showSuccessMessage)
+      .then(() => {
+        isFormSubmittedSuccessfully = true;
+        closePopup();
+        showSuccessMessage();
+      })
       .catch(() => {
+        isFormSubmittedSuccessfully = false;
         showErrorMessage();
-      }
-      )
+      })
       .finally(() => {
         submitBtnElement.disabled = false;
       });
@@ -122,4 +130,4 @@ const initEditPopup = () => {
   pictureInputElement.addEventListener('change', onPictureInputChange);
 };
 
-export {initEditPopup};
+export { initEditPopup };

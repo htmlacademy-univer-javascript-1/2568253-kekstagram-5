@@ -1,5 +1,5 @@
 import { isEscapeKey } from './utils.js';
-import { bodyElement }  from './main.js';
+import { bodyElement } from './main.js';
 import { STEP_COMMENTS } from './consts.js';
 
 const bigPictureElement = document.querySelector('.big-picture');

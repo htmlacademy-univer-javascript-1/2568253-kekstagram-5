@@ -24,7 +24,7 @@ const renderThumbnails = (data) => {
   thumbnails = data.slice();
   const thumbnailsListFragment = document.createDocumentFragment();
 
-  thumbnails.forEach( (picture) => {
+  thumbnails.forEach((picture) => {
     const newThumbnail = thumbnailTemplateElement.cloneNode(true);
     newThumbnail.dataset.pictureId = picture.id;
     newThumbnail.querySelector('.picture__img').src = picture.url;
